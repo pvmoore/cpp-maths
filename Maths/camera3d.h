@@ -92,7 +92,7 @@ public:
 		}
 		return view;
 	}
-	const matrix& invV() {
+	matrix invV() {
 		return V().inversed();
 	}
 	const matrix& P() final override {

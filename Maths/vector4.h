@@ -3,7 +3,6 @@
 ///	Currently supports float, double, int and unsigned int.
 /// Add more types as needed.
 ///
-
 #include <algorithm>
 
 namespace maths {

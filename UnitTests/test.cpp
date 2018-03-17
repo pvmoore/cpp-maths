@@ -24,6 +24,7 @@ public:
 		Assert::IsFalse(approxEqual(3.14f, 3.1402f));
 	}
 	TEST_METHOD(test_factorsOf) {
+        Assert::IsTrue(factorsOf(1) == vector<unsigned int>{1});
 		Assert::IsTrue(factorsOf(12) == vector<unsigned int>{12,6,4,3,2,1});
 	}
 };

@@ -4,6 +4,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace maths;
+using std::string;
 
 namespace UnitTests {
 
@@ -233,6 +234,18 @@ public:
 		Assert::IsTrue(a.right(up).normalised().approx({0,0,1}));
 		Assert::IsTrue(a.left(up).normalised().approx({0, 0, -1}));
 	}
+    TEST_METHOD(toString) {
+        float3 f{1.1f, 2.2f, 3.3f};
+
+        Assert::IsTrue(f.toString("%.1f") =="[1.1, 2.2, 3.3]");
+        Assert::IsTrue(f.toString("%.2f") == "[1.10, 2.20, 3.30]");
+
+        int3 i{1, 2, 3};
+        Assert::IsTrue(i.toString() == "[1, 2, 3]");
+
+        vector3<unsigned long long> sl{1,2,3};
+        Assert::IsTrue(sl.toString() == "[1, 2, 3]");
+    }
 };
 
 }

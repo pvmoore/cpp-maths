@@ -184,6 +184,18 @@ public:
 		Assert::IsTrue(float2{1, 2}.left() == float2{-2, 1});
 		Assert::IsTrue(float2{1, 2}.right() == float2{2, -1});
 	}
+    TEST_METHOD(toString) {
+        float2 f{1.1f, 2.2f};
+
+        Assert::IsTrue(f.toString("%.1f") == "[1.1, 2.2]");
+        Assert::IsTrue(f.toString("%.2f") == "[1.10, 2.20]");
+
+        int2 i{1, 2};
+        Assert::IsTrue(i.toString() == "[1, 2]");
+
+        vector2<unsigned long long> sl{1, 2};
+        Assert::IsTrue(sl.toString() == "[1, 2]");
+    }
 };
 
 }

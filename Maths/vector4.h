@@ -186,25 +186,31 @@ struct vector4 final {
 		return {std::abs(x), std::abs(y), std::abs(z), std::abs(w)};
 	}
 
-	std::string toString() const {
-		char buf[64];
-		const char* fmt = nullptr;
-		if constexpr(std::is_floating_point<T>::value) {
-			fmt = "[%.3f, %.3f, %.3f, %.3f]";
-		} else if constexpr(std::is_signed<T>::value) {
-			if constexpr(sizeof(T) == 8) {
-				fmt = "[%lld, %lld, %lld, %lld]";
-			} else {
-				fmt = "[%d, %d, %d, %d]";
-			}
-		} else if constexpr(sizeof(T) == 8) {
-			fmt = "[%llu, %llu, %llu, %llu]";
-		} else {
-			fmt = "[%u, %u, %u, %u]";
-		}
-		sprintf_s(buf, fmt, x, y, z, w);
-		return std::string(buf);
-	}
+    std::string toString(const char* fmt = nullptr) const {
+        char buf[64];
+        const char* format = nullptr;
+
+        if constexpr(std::is_floating_point<T>::value) {
+            format = "%.3f";
+        } else if constexpr(std::is_signed<T>::value) {
+            if constexpr(sizeof(T) == 8) {
+                format = "%lld";
+            } else {
+                format = "%d";
+            }
+        } else if constexpr(sizeof(T) == 8) {
+            format = "%llu";
+        } else {
+            format = "%u";
+        }
+        if(fmt) format = fmt;
+
+        char fmtbuf[64];
+        sprintf_s(fmtbuf, "[%s, %s, %s, %s]", format, format, format, format);
+
+        sprintf_s(buf, fmtbuf, x, y, z, w);
+        return std::string(buf);
+    }
 };
 
 typedef vector4<int> int4;

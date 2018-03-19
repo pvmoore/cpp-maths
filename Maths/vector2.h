@@ -186,25 +186,31 @@ struct vector2 final {
 		return {y,-x};
 	}
 
-	std::string toString() const {
-		char buf[64];
-		const char* fmt = nullptr;
-		if constexpr(std::is_floating_point<T>::value) {
-			fmt = "[%.3f, %.3f]";
-		} else if constexpr(std::is_signed<T>::value) {
-			if constexpr(sizeof(T) == 8) {
-				fmt = "[%lld, %lld]";
-			} else {
-				fmt = "[%d, %d]";
-			}
-		} else if constexpr(sizeof(T) == 8) {
-			fmt = "[%llu, %llu]";
-		} else {
-			fmt = "[%u, %u]";
-		}
-		sprintf_s(buf, fmt, x, y);
-		return std::string(buf);
-	}
+    std::string toString(const char* fmt = nullptr) const {
+        char buf[64];
+        const char* format = nullptr;
+
+        if constexpr(std::is_floating_point<T>::value) {
+            format = "%.3f";
+        } else if constexpr(std::is_signed<T>::value) {
+            if constexpr(sizeof(T) == 8) {
+                format = "%lld";
+            } else {
+                format = "%d";
+            }
+        } else if constexpr(sizeof(T) == 8) {
+            format = "%llu";
+        } else {
+            format = "%u";
+        }
+        if(fmt) format = fmt;
+
+        char fmtbuf[64];
+        sprintf_s(fmtbuf, "[%s, %s]", format, format);
+
+        sprintf_s(buf, fmtbuf, x, y);
+        return std::string(buf);
+    }
 };
 
 typedef vector2<int> int2;

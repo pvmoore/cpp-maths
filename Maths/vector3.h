@@ -3,6 +3,7 @@
 ///	Currently supports float, double, int and unsigned int.
 /// Add more types as needed.
 ///
+#include <cstdio>
 namespace maths {
 
 template<typename T>
@@ -253,23 +254,29 @@ struct vector3 final {
 		return cross(a);
 	}
 
-	std::string toString() const {
+	std::string toString(const char* fmt=nullptr) const {
 		char buf[64];
-		const char* fmt = nullptr;
+		const char* format = nullptr;
+
 		if constexpr(std::is_floating_point<T>::value) {
-			fmt = "[%.3f, %.3f, %.3f]";
+            format = "%.3f";
 		} else if constexpr(std::is_signed<T>::value) {
 			if constexpr(sizeof(T) == 8) {
-				fmt = "[%lld, %lld, %lld]";
+                format = "%lld";
 			} else {
-				fmt = "[%d, %d, %d]";
+                format = "%d";
 			}
 		} else if constexpr(sizeof(T) == 8) {
-			fmt = "[%llu, %llu, %llu]";
+            format = "%llu";
 		} else {
-			fmt = "[%u, %u, %u]";
+            format = "%u";
 		}
-		sprintf_s(buf, fmt, x, y, z);
+        if(fmt) format = fmt;
+
+        char fmtbuf[64];
+        sprintf_s(fmtbuf, "[%s, %s, %s]", format, format, format);
+
+		sprintf_s(buf, fmtbuf, x, y, z);
 		return std::string(buf);
 	}
 };

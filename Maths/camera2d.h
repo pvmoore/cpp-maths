@@ -22,31 +22,32 @@ public:
 		return std::move(s);
 	}
 
-	void init(uint2 windowSize) {
+	auto& init(uint2 windowSize) {
 		this->windowSize = windowSize;
 		this->position = float3{(float)windowSize.x / 2, (float)windowSize.y / 2, 1};
 		this->up = float3{0, 1, 0};
+        return *this;
 	}
-	auto moveTo(float2 pos) {
+	auto& moveTo(float2 pos) {
 		position = {pos.x, pos.y, 1};
 		recalculateView = true;
 		return *this;
 	}
-	auto moveBy(float2 pos) {
+	auto& moveBy(float2 pos) {
 		position += {pos.x, pos.y, 0};
 		recalculateView = true;
 		return *this;
 	}
 	// TODO - can we do zoom using Z?
 	/// 0.5 = zoomed out (50%), 1 = (100%) no zoom, 2 = (200%) zoomed in
-	auto setZoom(float z, float minZoom, float maxZoom) {
+	auto& setZoom(float z, float minZoom, float maxZoom) {
 		_zoomFactor = 1 / z;
 		this->minZoom = minZoom;
 		this->maxZoom = maxZoom;
 		recalculateProj = true;
 		return *this;
 	}
-	auto zoomOut(float z) {
+	auto& zoomOut(float z) {
 		if(_zoomFactor == maxZoom) return *this;
 		_zoomFactor += z;
 		if(_zoomFactor > maxZoom) {
@@ -55,7 +56,7 @@ public:
 		recalculateProj = true;
 		return *this;
 	}
-	auto zoomIn(float z) {
+	auto& zoomIn(float z) {
 		if(_zoomFactor == minZoom) return *this;
 		_zoomFactor -= z;
 		if(_zoomFactor < minZoom) {

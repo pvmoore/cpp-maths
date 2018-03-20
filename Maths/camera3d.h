@@ -32,55 +32,64 @@ public:
 		return s;
 	}
 
-	void init(const uint2& windowSize, const float3& pos, const float3& up, const float3& focalPoint) {
+	auto& init(const uint2& windowSize, const float3& pos, const float3& up, const float3& focalPoint) {
 		this->windowSize  = windowSize;
 		this->position    = pos;
 		this->up		  = up.normalised();
 		this->forward     = (focalPoint-pos).normalised();
 		this->focalLength = (focalPoint-pos).length();
+        return *this;
 	}
-	Camera3D& fovNearFar(float fovInRadians, float nr, float fr) {
+	auto& fovNearFar(float fovInRadians, float nr, float fr) {
 		this->_fov = fovInRadians;
 		this->_near = nr;
 		this->_far = fr;
 		recalculateProj = true;
 		return *this;
 	}
-	auto moveForward(float f) {
+	auto& moveForward(float f) {
 		auto dist = forward * f;
 		position += dist;
 		recalculateView = true;
-		return this;
+		return *this;
 	}
-	auto movePositionRelative(const float3& newpos) {
+	auto& movePositionRelative(const float3& newpos) {
 		position += newpos;
 		recalculateView = true;
-		return this;
+		return *this;
 	}
+    /// Rotate around the Y axis 
+    auto& rotateAroundYAxis(float radians) {
+        position = position.rotatedAroundY(radians);
+        up       = up.rotatedAroundY(radians);
+        forward  = forward.rotatedAroundY(radians);
+        recalculateView = true;
+        return *this;
+    }
 	/// move focal point up/down (around x plane)
-	auto pitch(float f) {
+	auto& pitch(float f) {
 		auto right = forward.cross(up);
 		auto dist  = up * f;
 		forward  = (forward + dist).normalised();
 		up = right.cross(forward);
 		recalculateView = true;
-		return this;
+		return *this;
 	}
 	/// move focal point left/right (around y plane)
-	auto yaw(float f) {
+	auto& yaw(float f) {
 		auto right = forward.cross(up);
 		auto dist = right * f;
 		forward = (forward + dist).normalised();
 		recalculateView = true;
-		return this;
+		return *this;
 	}
 	/// tip (around z plane)
-	auto roll(float f) {
+	auto& roll(float f) {
 		auto right = forward.cross(up);
 		auto dist = right * f;
 		up = (up + dist).normalised();
 		recalculateView = true;
-		return this;
+		return *this;
 	}
 	const matrix& V() final override {
 		if(recalculateView) {

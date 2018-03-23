@@ -12,10 +12,9 @@ struct vector2 final {
 	T x = 0, y = 0;
 	vector2() = default;
 	constexpr vector2(T x, T y) : x(x), y(y) {}
-	constexpr vector2(const vector2<int>& i) : x(T(i.x)), y(T(i.y)) {}
-	constexpr vector2(const vector2<unsigned int>& i) : x(T(i.x)), y(T(i.y)) {}
-	constexpr vector2(const vector2<float>& i) : x(T(i.x)), y(T(i.y)) {}
-	constexpr vector2(const vector2<double>& i) : x(T(i.x)), y(T(i.y)) {}
+
+    template<typename S>
+	constexpr vector2(const vector2<S>& i) : x(T(i.x)), y(T(i.y)) {}
 
 	constexpr T& operator[](unsigned int index) {
 		assert(index<2);

@@ -13,10 +13,8 @@ struct vector3 final {
 	T x = 0, y = 0, z = 0;
 	vector3() = default;
 	constexpr vector3(T x, T y, T z) : x(x), y(y), z(z) {}
-	constexpr vector3(const vector3<int>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)) {}
-	constexpr vector3(const vector3<unsigned int>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)) {}
-	constexpr vector3(const vector3<float>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)) {}
-	constexpr vector3(const vector3<double>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)) {}
+    template<typename S>
+	constexpr vector3(const vector3<S>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)) {}
 
 	constexpr T& operator[](unsigned int index) {
 		assert(index<3);

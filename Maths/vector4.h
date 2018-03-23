@@ -17,10 +17,8 @@ struct vector4 final {
 	vector4() = default;
 	constexpr vector4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w) {}
 	/// Copy constructors
-	constexpr vector4(const vector4<int>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)), w(T(i.w)) {}
-	constexpr vector4(const vector4<unsigned int>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)), w(T(i.w)) {}
-	constexpr vector4(const vector4<float>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)), w(T(i.w)) {}
-	constexpr vector4(const vector4<double>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)), w(T(i.w)) {}
+    template<typename S>
+	constexpr vector4(const vector4<S>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)), w(T(i.w)) {}
 
 	constexpr T& operator[](unsigned int index) { 
 		assert(index<4);

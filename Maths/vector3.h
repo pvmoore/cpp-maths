@@ -16,6 +16,22 @@ struct vector3 final {
     template<typename S>
 	constexpr vector3(const vector3<S>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)) {}
 
+    /// unordered_map<int3,value,int3::HashFunc> mymap;
+    struct HashFunc {
+        std::size_t operator()(const vector3& k) const {
+            if constexpr(sizeof(T) == 4) {
+                unsigned int* p = (unsigned int*)&k.x;
+            } else if constexpr(sizeof(T) == 8) {
+                unsigned long long* p = (unsigned long long*)&k.x;
+            }
+            std::size_t a = 5381;
+            a  = ((a << 7))  + p[0];
+            a ^= ((a << 13)) + p[1];
+            a  = ((a << 19)) + p[2];
+            return a;
+        }
+    };
+
 	constexpr T& operator[](unsigned int index) {
 		assert(index<3);
 		T* p = (&x) + index;
@@ -253,7 +269,7 @@ struct vector3 final {
 	}
 
 	std::string toString(const char* fmt=nullptr) const {
-		char buf[64];
+		char buf[128];
 		const char* format = nullptr;
 
 		if constexpr(std::is_floating_point<T>::value) {
@@ -271,7 +287,7 @@ struct vector3 final {
 		}
         if(fmt) format = fmt;
 
-        char fmtbuf[64];
+        char fmtbuf[128];
         sprintf_s(fmtbuf, "[%s, %s, %s]", format, format, format);
 
 		sprintf_s(buf, fmtbuf, x, y, z);

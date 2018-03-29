@@ -16,6 +16,21 @@ struct vector2 final {
     template<typename S>
 	constexpr vector2(const vector2<S>& i) : x(T(i.x)), y(T(i.y)) {}
 
+    /// unordered_map<float2,value,float2::HashFunc> mymap;
+    struct HashFunc {
+        std::size_t operator()(const vector2& k) const {
+            if constexpr(sizeof(T) == 4) {
+                unsigned int* p = (unsigned int*)&k.x;
+            } else if constexpr(sizeof(T) == 8) {
+                unsigned long long* p = (unsigned long long*)&k.x;
+            }
+            std::size_t a = 5381;
+            a = ((a << 7)) + p[0];
+            a ^= ((a << 13)) + p[1];
+            return a;
+        }
+    };
+
 	constexpr T& operator[](unsigned int index) {
 		assert(index<2);
 		return index == 0 ? x : y;

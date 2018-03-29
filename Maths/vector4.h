@@ -20,6 +20,23 @@ struct vector4 final {
     template<typename S>
 	constexpr vector4(const vector4<S>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)), w(T(i.w)) {}
 
+    /// unordered_map<float4,value,float4::HashFunc> mymap;
+    struct HashFunc {
+        std::size_t operator()(const vector4& k) const {
+            if constexpr(sizeof(T) == 4) {
+                unsigned int* p = (unsigned int*)&k.x;
+            } else if constexpr(sizeof(T) == 8) {
+                unsigned long long* p = (unsigned long long*)&k.x;
+            }
+            std::size_t a = 5381;
+            a  = ((a << 7)) + p[0];
+            a ^= ((a << 13)) + p[1];
+            a  = ((a << 19)) + p[2];
+            a ^= ((a << 23)) + p[3];
+            return a;
+        }
+    };
+
 	constexpr T& operator[](unsigned int index) { 
 		assert(index<4);
 		T* p = (&x)+index;

@@ -16,6 +16,9 @@ struct vector2 final {
     template<typename S>
 	constexpr vector2(const vector2<S>& i) : x(T(i.x)), y(T(i.y)) {}
 
+    /// Swizzling
+    inline constexpr vector2<T> yx() const { return {y, x}; }
+
     /// unordered_map<float2,value,float2::HashFunc> mymap;
     struct HashFunc {
         std::size_t operator()(const vector2& k) const {

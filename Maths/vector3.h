@@ -16,6 +16,20 @@ struct vector3 final {
     template<typename S>
 	constexpr vector3(const vector3<S>& i) : x(T(i.x)), y(T(i.y)), z(T(i.z)) {}
 
+    /// Swizzling
+    inline constexpr vector3 xzy() const { return {x, z, y}; }
+    inline constexpr vector3 yxz() const { return {y, x, z}; }
+    inline constexpr vector3 zxy() const { return {z, x, y}; }
+    inline constexpr vector3 yzx() const { return {y, z, x}; }
+    inline constexpr vector3 zyx() const { return {z, y, x}; }
+
+    inline constexpr vector2<T> xy() const { return {x, y}; }
+    inline constexpr vector2<T> xz() const { return {x, z}; }
+    inline constexpr vector2<T> yx() const { return {y, x}; }
+    inline constexpr vector2<T> yz() const { return {y, z}; }
+    inline constexpr vector2<T> zx() const { return {z, x}; }
+    inline constexpr vector2<T> zy() const { return {z, y}; }
+
     /// unordered_map<int3,value,int3::HashFunc> mymap;
     struct HashFunc {
         std::size_t operator()(const vector3& k) const {

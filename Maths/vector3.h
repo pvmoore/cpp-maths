@@ -134,6 +134,7 @@ struct vector3 final {
 		return approxEqual(x, o.x) && approxEqual(y, o.y) && approxEqual(z, o.z);
 	}
 
+    constexpr bool anyEQ(T v) const { return x==v || y==v || z==v; }
 	constexpr bool anyLT(T v) const { return x<v || y<v || z<v; }
 	constexpr bool anyLTE(T v) const { return x <= v || y <= v || z <= v; }
 	constexpr bool anyGT(T v) const { return x>v || y>v || z>v; }

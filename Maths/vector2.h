@@ -120,6 +120,7 @@ struct vector2 final {
 		return approxEqual(x, o.x) && approxEqual(y, o.y);
 	}
 
+    constexpr bool anyEQ(T v) const { return x==v || y==v; }
 	constexpr bool anyLT(T v) const { return x<v || y<v; }
 	constexpr bool anyLTE(T v) const { return x <= v || y <= v; }
 	constexpr bool anyGT(T v) const { return x>v || y>v; }

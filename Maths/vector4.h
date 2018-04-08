@@ -133,6 +133,7 @@ struct vector4 final {
 			   approxEqual(z, o.z) && approxEqual(w, o.w);
 	}
 
+    constexpr bool anyEQ(T v) const { return x==v || y==v || z==v || w==v; }
 	constexpr bool anyLT(T v) const { return x<v || y<v || z<v || w<v; }
 	constexpr bool anyLTE(T v) const { return x <= v || y <= v || z <= v || w <= v; }
 	constexpr bool anyGT(T v) const { return x>v || y>v || z>v || w>v; }

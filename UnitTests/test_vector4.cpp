@@ -95,6 +95,12 @@ public:
 		Assert::IsTrue((b /= float4{10, 20, 30, 40}) == float4{1, 1, 1, 1});
 	}
 	TEST_METHOD(any) {
+        Assert::IsTrue(float4{1, 2, 3, 4}.anyEQ(1) == true);
+        Assert::IsTrue(float4{1, 2, 3, 4}.anyEQ(2) == true);
+        Assert::IsTrue(float4{1, 2, 3, 4}.anyEQ(3) == true);
+        Assert::IsTrue(float4{1, 2, 3, 4}.anyEQ(4) == true);
+        Assert::IsTrue(float4{1, 2, 3, 4}.anyEQ(5) == false);
+
 		Assert::IsTrue(float4{1, 3, 5, 7}.anyLT(8) == true);
 		Assert::IsTrue(float4{1, 3, 5, 7}.anyLT(2) == true);
 		Assert::IsTrue(float4{1, 3, 5, 7}.anyLT(1) == false);

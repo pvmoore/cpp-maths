@@ -92,6 +92,10 @@ public:
 		Assert::IsTrue((b /= float2{10, 20}) == float2{1, 1});
 	}
 	TEST_METHOD(any) {
+        Assert::IsTrue(float2{1, 2}.anyEQ(1) == true);
+        Assert::IsTrue(float2{1, 2}.anyEQ(2) == true);
+        Assert::IsTrue(float2{1, 2}.anyEQ(3) == false);
+
 		Assert::IsTrue(float2{1, 3}.anyLT(5) == true);
 		Assert::IsTrue(float2{1, 3}.anyLT(2) == true);
 		Assert::IsTrue(float2{1, 3}.anyLT(1) == false);

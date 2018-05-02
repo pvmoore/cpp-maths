@@ -1,2 +1,2 @@
-# Maths
+# C++ Maths Library
 

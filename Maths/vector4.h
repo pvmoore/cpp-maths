@@ -23,16 +23,11 @@ struct vector4 final {
     /// unordered_map<float4,value,float4::HashFunc> mymap;
     struct HashFunc {
         std::size_t operator()(const vector4& k) const {
-            if constexpr(sizeof(T) == 4) {
-                unsigned int* p = (unsigned int*)&k.x;
-            } else if constexpr(sizeof(T) == 8) {
-                unsigned long long* p = (unsigned long long*)&k.x;
-            }
             std::size_t a = 5381;
-            a  = ((a << 7)) + p[0];
-            a ^= ((a << 13)) + p[1];
-            a  = ((a << 19)) + p[2];
-            a ^= ((a << 23)) + p[3];
+            a  = ((a << 7))  + (std::size_t)k.x;
+            a ^= ((a << 13)) + (std::size_t)k.y;
+            a  = ((a << 19)) + (std::size_t)k.z;
+            a ^= ((a << 23)) + (std::size_t)k.w;
             return a;
         }
     };

@@ -251,6 +251,13 @@ public:
         vector3<unsigned long long> sl{1,2,3};
         Assert::IsTrue(sl.toString() == "[1, 2, 3]");
     }
+    TEST_METHOD(hash) {
+        float3 f{1.1f, 2.2f, 3.3f};
+
+        std::unordered_set<float3, float3::HashFunc> s;
+
+        s.insert(f);
+    }
 };
 
 }

@@ -133,6 +133,12 @@ struct vector3 final {
 	constexpr bool approx(const vector3& o) const {
 		return approxEqual(x, o.x) && approxEqual(y, o.y) && approxEqual(z, o.z);
 	}
+    /// For std::set and other containers that use comparison
+    constexpr bool operator<(const vector3& o) const {
+        if(x<o.x) return true;
+        if(x==o.x && y<o.y) return true;
+        return x==o.x && y==o.y && z < o.z;
+    }
 
     constexpr bool anyEQ(T v) const { return x==v || y==v || z==v; }
 	constexpr bool anyLT(T v) const { return x<v || y<v || z<v; }

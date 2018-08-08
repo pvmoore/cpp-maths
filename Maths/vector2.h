@@ -119,6 +119,11 @@ struct vector2 final {
 	constexpr bool approx(const vector2& o) const {
 		return approxEqual(x, o.x) && approxEqual(y, o.y);
 	}
+    /// For std::set and other containers that use comparison
+    constexpr bool operator<(const vector2& o) const {
+        if(x<o.x) return true;
+        return x == o.x && y<o.y;
+    }
 
     constexpr bool anyEQ(T v) const { return x==v || y==v; }
 	constexpr bool anyLT(T v) const { return x<v || y<v; }

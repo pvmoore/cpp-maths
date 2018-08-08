@@ -67,8 +67,8 @@ public:
 	}
 	const matrix& P() final override {
 		if(recalculateProj) {
-			float width = windowSize.x*_zoomFactor;
-			float height = windowSize.y*_zoomFactor;
+			float width  = (float)windowSize.x*_zoomFactor;
+			float height = (float)windowSize.y*_zoomFactor;
 
 			proj = matrix::orthoRH(width, -height, 0.0f, 100.0f);
 

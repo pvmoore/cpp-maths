@@ -119,6 +119,15 @@ struct vector2 final {
         if(x<o.x) return true;
         return x == o.x && y<o.y;
     }
+    constexpr bool operator<=(const vector2& o) const {
+        return !(o < this);
+    }
+    constexpr bool operator>(const vector2& o) const {
+        return o < this;
+    }
+    constexpr bool operator>=(const vector2& o) const {
+        return !(this < o);
+    }
 
     constexpr bool anyEQ(T v) const { return x==v || y==v; }
 	constexpr bool anyLT(T v) const { return x<v || y<v; }

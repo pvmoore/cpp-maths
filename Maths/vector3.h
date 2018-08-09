@@ -134,6 +134,15 @@ struct vector3 final {
         if(x==o.x && y<o.y) return true;
         return x==o.x && y==o.y && z < o.z;
     }
+    constexpr bool operator<=(const vector3& o) const {
+        return !(o < this);
+    }
+    constexpr bool operator>(const vector3& o) const {
+        return o < this;
+    }
+    constexpr bool operator>=(const vector3& o) const {
+        return !(this < o);
+    }
 
     constexpr bool anyEQ(T v) const { return x==v || y==v || z==v; }
 	constexpr bool anyLT(T v) const { return x<v || y<v || z<v; }

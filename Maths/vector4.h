@@ -134,6 +134,15 @@ struct vector4 final {
         if(x == o.x && y == o.y && z < o.z) return true;
         return x==o.x && y==o.y && z==o.z && w<o.w;
     }
+    constexpr bool operator<=(const vector4& o) const {
+        return !(o < this);
+    }
+    constexpr bool operator>(const vector4& o) const {
+        return o < this;
+    }
+    constexpr bool operator>=(const vector4& o) const {
+        return !(this < o);
+    }
 
     constexpr bool anyEQ(T v) const { return x==v || y==v || z==v || w==v; }
 	constexpr bool anyLT(T v) const { return x<v || y<v || z<v || w<v; }

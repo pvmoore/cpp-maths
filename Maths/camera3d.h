@@ -38,6 +38,9 @@ public:
 		this->up		  = up.normalised();
 		this->forward     = (focalPoint-pos).normalised();
 		this->focalLength = (focalPoint-pos).length();
+        recalculateView = true;
+        recalculateProj = true;
+        recalculateViewProj = true;
         return *this;
 	}
 	auto& fovNearFar(float fovInRadians, float nr, float fr) {

@@ -24,3 +24,4 @@ std::vector<unsigned int> factorsOf(unsigned int n);
 #include "camera.h"
 #include "camera2d.h"
 #include "camera3d.h"
+#include "noise.h"

@@ -41,6 +41,9 @@
     <ClInclude Include="camera2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="noise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="statics.cpp">

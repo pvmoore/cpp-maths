@@ -4,7 +4,6 @@ namespace maths {
 
 class NoiseFunction2D {
 public:
-    //virtual ~NoiseFunction2D()=0;
     virtual float get(float x, float y)=0;
     float get(float2 v) {
         return get(v.x, v.y);

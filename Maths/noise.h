@@ -15,23 +15,18 @@ class PerlinNoise2D : NoiseFunction2D {
     float persistence = 0.5f;
     int octaveCount = 7;
     unsigned int seed;
-    float* whiteNoise;
     float* perlinNoise;
     bool generated = false;
 public:
     PerlinNoise2D(int width, int height, unsigned int seed) 
-        : width(width), height(height), whiteNoise(new float[width*height]), perlinNoise(new float[width*height]) 
-    {
-        generateWhiteNoise();
-    }
+        : width(width), height(height), seed(seed), perlinNoise(new float[width*height]) 
+    {}
     ~PerlinNoise2D() {
-        delete[] whiteNoise;
         delete[] perlinNoise;
     }
     auto& setSeed(unsigned int s) {
         seed = s;
         generated = false;
-        generateWhiteNoise();
         return *this;
     }
     auto& setOctaves(int o) {
@@ -58,21 +53,25 @@ public:
         return perlinNoise[(int)x + (int)y*width];
     }
 private:
-    void generateWhiteNoise() {
+    float* generateWhiteNoise() {
         std::mt19937 rng;
         rng.seed(seed);
         std::uniform_real_distribution<float> rand(0.0, 1.0);
 
+        float* whiteNoise = new float[width*height];
+
         for(auto i = 0; i < width*height; i++) {
             whiteNoise[i] = rand(rng);
         }
+        return whiteNoise;
     }
     void generatePerlinNoise() {
+        float* whiteNoise   = generateWhiteNoise();
         float** smoothNoise = new float*[octaveCount];
 
         /// Generate octaves of smooth noise
         for(auto i = 0; i < octaveCount; i++) {
-            smoothNoise[i] = generateSmoothNoise(i);
+            smoothNoise[i] = generateSmoothNoise(whiteNoise, i);
         }
 
         float amplitude = 1.0f;
@@ -105,8 +104,9 @@ private:
         }
 
         delete[] smoothNoise;
+        delete[] whiteNoise;
     }
-    float* generateSmoothNoise(int octave) {
+    float* generateSmoothNoise(float* whiteNoise, int octave) {
         float* smoothNoise    = new float[width*height];
         int samplePeriod      = 1 << octave; // calculates 2 ^ k
         float sampleFrequency = 1.0f / samplePeriod;
